@@ -44,7 +44,7 @@
         platform_ids: [SaleBotPro.recipient_id],
         group_id: '707314'
       };
-      fetch(url, {
+      fetch(urlFindClient, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(dataFindClient)
@@ -63,12 +63,12 @@
             campbox_user_id: '763e331f-b605-41fd-b9e9-2f6d7efba714',
           }
         };
-        fetch(url, {
+        fetch(urlSaveVariables, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(data)
+          body: JSON.stringify(dataSaveVariables)
         })
         .then(response => response.json())
         .then(result => {
