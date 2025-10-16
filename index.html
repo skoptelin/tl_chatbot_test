@@ -94,5 +94,17 @@
     <script src="https://bot.jaicp.com/chatwidget/uEkMjVpG:8b07b27d33364b439329985b0220b3e49f9111f9/justwidget.js" async></script>
     <script src='https://salebot.pro/js/salebot.js?v=1' charset='utf-8'></script>
     <script>  SaleBotPro.init({    onlineChatId: '4859'  });</script>
+    <script>
+      window.addEventListener('load', () => {
+        if (window.SaleBotPro) {
+          // Передаем переменную в чат (пример)
+          SaleBotPro.setClientVariable('external_user_id', "763e331f-b605-41fd-b9e9-2f6d7efba714");
+
+          // Если есть функция отправки формы при старте
+          // Можно вызвать ее для привязки userId
+          SaleBotPro.online_chat_send_form("external_user_id", "Привет! Мы знаем вас по ID.");
+        }
+      });
+    </script>
   </body>
 </html>
