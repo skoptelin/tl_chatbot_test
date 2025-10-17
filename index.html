@@ -28,7 +28,7 @@
       <button class="t776__btn-wrapper">Кнопка 5</button>
     </div>
     <script src="https://bot.jaicp.com/chatwidget/uEkMjVpG:8b07b27d33364b439329985b0220b3e49f9111f9/justwidget.js" async></script>
-    <script src='https://salebot.pro/js/salebot.js?v=1'></script>
+    <script src='https://salebot.pro/js/salebot.js?v=1' charset='utf-8'></script>
     <script>
       SaleBotPro.init({
         onlineChatId: '4859'
@@ -36,8 +36,8 @@
     </script>
     <script>
       const apiKey = '788375de0dd3b5a8207a6f917991d5f4';
-      const urlSaveVariables = `https://chatter.salebot.pro/api/${apiKey}/save_variables`;
-      const urlFindClient = `https://chatter.salebot.pro/api/${apiKey}/find_client_id_by_platform_id`;
+      const urlSaveVariables = `https://lesli-unpersonifying-tridimensionally.ngrok-free.dev/api/${apiKey}/save_variables`;
+      const urlFindClient = `https://lesli-unpersonifying-tridimensionally.ngrok-free.dev/api/${apiKey}/find_client_id_by_platform_id`;
       let clientId;
 
       const dataFindClient = {
@@ -47,8 +47,7 @@
       fetch(urlFindClient, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Access-Control-Allow-Origin': '*'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(dataFindClient)
       })
