@@ -35,51 +35,54 @@
       });
     </script>
     <script>
-      const apiKey = '788375de0dd3b5a8207a6f917991d5f4';
-      const urlSaveVariables = `https://lesli-unpersonifying-tridimensionally.ngrok-free.dev/api/${apiKey}/save_variables`;
-      const urlFindClient = `https://lesli-unpersonifying-tridimensionally.ngrok-free.dev/api/${apiKey}/find_client_id_by_platform_id`;
-      let clientId;
+      document.addEventListener('SaleBotProReady', function() {
+        console.log('SaleBotPro is ready');
+        const apiKey = '788375de0dd3b5a8207a6f917991d5f4';
+        const urlSaveVariables = `https://lesli-unpersonifying-tridimensionally.ngrok-free.dev/api/${apiKey}/save_variables`;
+        const urlFindClient = `https://lesli-unpersonifying-tridimensionally.ngrok-free.dev/api/${apiKey}/find_client_id_by_platform_id`;
+        let clientId;
 
-      const dataFindClient = {
-        platform_ids: [SaleBotPro.recipient_id],
-        group_id: '707314'
-      };
-      fetch(urlFindClient, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dataFindClient)
-      })
-      .then(res => res.json())
-      .then(json => {
-        clientId = json.client_ids ? json.client_ids[0] : null;
-        console.log('Client ID:', json.client_ids ? json.client_ids[0] : null);
-      })
-      .catch(e => console.error('Ошибка FindClient:', e));
-
-      if (clientId) {
-        const dataSaveVariables = {
-          client_id: clientId,
-          variables: {
-            campbox_user_id: '763e331f-b605-41fd-b9e9-2f6d7efba714',
-          }
+        const dataFindClient = {
+          platform_ids: [SaleBotPro.recipient_id],
+          group_id: '707314'
         };
-        fetch(urlSaveVariables, {
+        fetch(urlFindClient, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(dataSaveVariables)
+          body: JSON.stringify(dataFindClient)
         })
-        .then(response => response.json())
-        .then(result => {
-          console.log('Campbox user ID отправлен:', result);
+        .then(res => res.json())
+        .then(json => {
+          clientId = json.client_ids ? json.client_ids[0] : null;
+          console.log('Client ID:', json.client_ids ? json.client_ids[0] : null);
         })
-        .catch(error => {
-          console.error('Ошибка SaveVariables:', error);
-        });
-      }
+        .catch(e => console.error('Ошибка FindClient:', e));
+
+        if (clientId) {
+          const dataSaveVariables = {
+            client_id: clientId,
+            variables: {
+              campbox_user_id: '763e331f-b605-41fd-b9e9-2f6d7efba714',
+            }
+          };
+          fetch(urlSaveVariables, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataSaveVariables)
+          })
+          .then(response => response.json())
+          .then(result => {
+            console.log('Campbox user ID отправлен:', result);
+          })
+          .catch(error => {
+            console.error('Ошибка SaveVariables:', error);
+          });
+        }
+      });
     </script>
   </body>
 </html>
