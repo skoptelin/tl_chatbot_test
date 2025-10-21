@@ -35,32 +35,35 @@
       });
     </script>
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        console.log('SaleBotPro is ready');
+      setTimeout(function() {
         const apiKey = '788375de0dd3b5a8207a6f917991d5f4';
+        const recipientId = window.SaleBotPro.recipient_id;
         const urlSaveVariables = `https://lesli-unpersonifying-tridimensionally.ngrok-free.dev/api/${apiKey}/save_variables`;
-        const urlFindClient = `https://lesli-unpersonifying-tridimensionally.ngrok-free.dev/api/${apiKey}/find_client_id_by_platform_id`;
+        const urlFindClient = `https://chatter.salebot.pro/api/${apiKey}/online_chat_client_id?recipient=${recipientId}`;
+        console.log('Recipient ID:', recipientId);
         let clientId;
 
-        const dataFindClient = {
-          platform_ids: [window.SaleBotPro.recipient_id],
-          group_id: '707314'
-        };
-        fetch(urlFindClient, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(dataFindClient)
-        })
-        .then(res => res.json())
-        .then(json => {
-          clientId = json.client_ids ? json.client_ids[0] : null;
-          console.log('Client ID:', json.client_ids ? json.client_ids[0] : null);
-        })
-        .catch(e => console.error('Ошибка FindClient:', e));
+        if (recipientId) {
+          fetch(urlFindClient, {
+            method: 'GET'
+          })
+          .then(res => res.json())
+          .then(json => {
+            console.log('FindClient response:', json);
+            if (json.length === 0) {
+              console.error('Клиент не найден');
+              return;
+            }
+            clientId = json.client_id ? json.client_id : null;
+            console.log('Client ID:', json.client_id ? json.client_id : null);
+            if (clientId) {
+              sendCampboxUserId(clientId);
+            }
+          })
+          .catch(e => console.error('Ошибка FindClient:', e));
+        }
 
-        if (clientId) {
+        function sendCampboxUserId(clientId) {
           const dataSaveVariables = {
             client_id: clientId,
             variables: {
@@ -74,15 +77,14 @@
             },
             body: JSON.stringify(dataSaveVariables)
           })
-          .then(response => response.json())
-          .then(result => {
-            console.log('Campbox user ID отправлен:', result);
+          .then(response => {
+            console.log('Campbox user ID отправлен:', response);
           })
           .catch(error => {
             console.error('Ошибка SaveVariables:', error);
           });
         }
-      });
+      }, 3000);
     </script>
   </body>
 </html>
